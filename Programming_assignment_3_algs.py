@@ -43,7 +43,30 @@ def fill_dp(dp, A, B, values):
                 else:
                     dp[i][j] = dp[i][j-1]
 
+def reconstruct(dp, A, B, values):
+    i = len(A)
+    j = len(B)
 
+    result = []
+
+    while i > 0 and j > 0:
+        if A[i-1] == B[j-1]:
+            if dp[i][j] == dp[i-1][j-1] + values[A[i-1]]:
+                result.append(A[i-1])
+                i -= 1
+                j -= 1
+            else: 
+                if dp[i-1][j] > dp[i][j-1]:
+                    i -= 1
+                else:
+                    j -= 1
+        else:
+            if dp[i-1][j] > dp[i][j-1]:
+                i -= 1
+            else:
+                j -= 1
+    result.reverse()
+    return "".join(result)
        
 
 def main():
@@ -55,7 +78,8 @@ def main():
     dp = initialize_dp(n ,m)
     fill_dp(dp, A, B, values)
     print(dp[n][m])
-
+    result = reconstruct(dp, A, B, values)
+    print(result)
 
 
 
