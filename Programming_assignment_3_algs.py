@@ -20,6 +20,32 @@ def initialize_dp(n, m):
         dp.append(row)
     return dp
 
+def fill_dp(dp, A, B, values):
+    n = len(A)
+    m = len(B)
+
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
+            if A[i-1] == B[j-1]:
+                match_value = dp[i-1][j-1] + values[A[i-1]]
+                if dp[i-1][j] > dp[i][j-1]:
+                    best_without_match = dp[i-1][j]
+                else:
+                    best_without_match = dp[i][j-1]
+                if match_value > best_without_match:
+                    dp[i][j] = match_value
+                else:
+                    dp[i][j] = best_without_match
+
+            else:
+                if dp[i-1][j] > dp[i][j-1]:
+                    dp[i][j] = dp[i-1][j]
+                else:
+                    dp[i][j] = dp[i][j-1]
+
+
+       
+
 def main():
     values, A, B = read_input()
 
@@ -27,12 +53,10 @@ def main():
     m = len(B)
 
     dp = initialize_dp(n ,m)
+    fill_dp(dp, A, B, values)
+    print(dp[n][m])
 
-    #prints for testing
-    print("Values: ", values)
-    print("A:", A)
-    print("B:", B)
-    print("DP size:", n+1, "x", m+1)
+
 
 
 if __name__ == "__main__":
