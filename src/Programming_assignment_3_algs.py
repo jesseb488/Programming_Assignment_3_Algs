@@ -79,9 +79,9 @@ def main():
 
     dp = initialize_dp(n, m)
 
-    start = time.time()
+    start = time.perf_counter()
     fill_dp(dp, A, B, values)
-    end = time.time()
+    end = time.perf_counter()
 
     print(dp[n][m])
     result = reconstruct(dp, A, B, values)
