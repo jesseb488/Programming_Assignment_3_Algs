@@ -1,3 +1,5 @@
+import time
+
 def read_input():
     k = int(input())
 
@@ -75,12 +77,16 @@ def main():
     n = len(A)
     m = len(B)
 
-    dp = initialize_dp(n ,m)
+    dp = initialize_dp(n, m)
+
+    start = time.time()
     fill_dp(dp, A, B, values)
+    end = time.time()
+
     print(dp[n][m])
     result = reconstruct(dp, A, B, values)
     print(result)
-
+    print(f"Runtime: {end - start:.6f} seconds", flush=True)
 
 
 if __name__ == "__main__":
